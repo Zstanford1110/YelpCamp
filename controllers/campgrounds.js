@@ -27,7 +27,6 @@ module.exports.createCampground = async (req, res, next) => {
     campground.images = req.files.map(f => ({ url: f.path, filename: f.filename }));
     campground.author = req.user._id; // Set the author of the campground to be the currently signed in user.
     await campground.save();
-    console.log(campground);
     req.flash('success', 'Successfully created a new campground!'); // Flash if we successfully upload and make it to this point, now we can display it on our template we redirect to
     res.redirect(`/campgrounds/${campground._id}`);
 }
@@ -65,6 +64,11 @@ module.exports.updateCamgpround = async (req, res) => {
     const campground = await Campground.findByIdAndUpdate(id, { ...req.body.campground });
     const imgs = req.files.map(f => ({ url: f.path, filename: f.filename })); // Generate an array of uploaded images
     campground.images.push(...imgs); // We need to push, not overwrite the existing images. We also need to spread each individual image out of the input array so we arent pushing an array inside of an array (Type error!)
+    const geoData = await geocoder.forwardGeocode({
+        query: req.body.campground.location,
+        limit: 1
+    }).send()
+    campground.geometry = geoData.body.features[0].geometry;
     await campground.save();
     // If we have images in the deleteImages array (populated using HTML/EJS) from the edit form, delete those images
     if (req.body.deleteImages) {
