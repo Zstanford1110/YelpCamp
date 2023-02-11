@@ -83,7 +83,7 @@ const sessionConfig = {
         expires: Date.now() + 604800000, // One week before it expires
         maxAge: 604800000,
         httponly: true, // mitigates XSS by not allowing the user to access the cookie outside of HTTP requests
-        // UNCOMMENT THIS LINE IN FINAL PRODUCATION **** secure: true 
+        secure: true
     }
 }
 
