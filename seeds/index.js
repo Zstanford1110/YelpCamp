@@ -5,6 +5,8 @@ const Campground = require('../models/campgrounds');
 
 // Self-contained database seeding file
 
+// Dev Database = 'mongodb://127.0.0.1:27017/YelpCamp'
+
 mongoose.connect('mongodb://127.0.0.1:27017/YelpCamp', {
     useNewUrlParser: true,
     useUnifiedTopology: true
