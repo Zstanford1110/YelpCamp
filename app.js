@@ -29,7 +29,7 @@ mongoose.set('strictQuery', false);
 
 // Dev URL: mongodb://127.0.0.1:27017/YelpCamp
 // Production URL: process.env.DB_URL; 
-const dbUrl = 'mongodb://127.0.0.1:27017/YelpCamp';
+const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/YelpCamp';
 
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
